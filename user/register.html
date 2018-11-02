@@ -20,12 +20,16 @@
         <span class="title">注册</span>
     </header>
     <div class="cz_container">
+        <form action="">
         <div class="form_box">
+                <div class="mui-input-row">
+                        <input name="username" type="text" placeholder="用户名">
+                    </div>
             <div class="mui-input-row">
                 <input name="mobile" type="text" placeholder="手机号">
             </div>
             <div class="mui-input-row">
-                <input name="pass" type="password" placeholder="密码" class="mui-input-password">
+                <input name="password" type="password" placeholder="密码" class="mui-input-password">
                 <span class="mui-icon mui-icon-eye"></span>
             </div>
             <div class="mui-input-row">
@@ -33,15 +37,16 @@
                 <span class="mui-icon mui-icon-eye"></span>
             </div>
             <div class="mui-input-row">
-                <input name="code" type="text" placeholder="认证码">
+                <input name="vCode" type="text" placeholder="认证码">
                 <a href="javascript:;" class="btn_getCode mui-btn mui-btn-primary" >获取认证码</a>
             </div>
-            <a href="index.html" class="mui-btn mui-btn-primary btn_login">注册</a>
+            <button class="mui-btn mui-btn-primary btn_login">注册</button>
             <div class="mui-input-row cz_text">
                 <input type="checkbox" checked/> 我同意《会员服务协议》
                 <a href="login.html">立即登录</a>
             </div>
         </div>
+    </form>
     </div>
     <footer class="cz_tabs">
         <a class="tab_home fa fa-home" href="../index.html"><span>首页</span></a>
@@ -50,7 +55,37 @@
         <a class="tab_user fa fa-user" href="../user/index.html"><span>会员中心</span></a>
     </footer>
 </div>
+<script src="../js/jquery-1.12.4.min.js"></script>
 <script src="../res/mui/js/mui.min.js"></script>
 
+    <script>
+    $('form').on('submit',function(){
+       var data= $(this).serialize()
+        $.ajax({
+             url:'/abc/user/register',
+             type:'post',
+             data:data,
+             success:function(info){
+                 if(info.success){
+                     location.href='/user/login.html';
+                 }
+                 if(info.error){
+                     alert('注册失败，请重新注册');
+                 }
+             }
+        })
+        return false;
+    })
+    //获取验证码
+    $('.btn_getCode').on('click',function(){
+        $.ajax({
+            url:'/abc/user/vCode',
+            type:'get',
+            success:function(info){
+
+            }
+        })
+    })
+    </script>
 </body>
 </html>
